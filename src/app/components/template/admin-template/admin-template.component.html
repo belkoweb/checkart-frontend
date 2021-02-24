@@ -1,0 +1,82 @@
+<nav class="navbar navbar-expand-lg navbar-light justify-content-end" style="margin-bottom:10px;margin-left:90px; background:linear-gradient(90deg,#00c4cc,#7d2ae8);">
+  <div>
+    <ul class="nav navbar-nav navbar-right" *ngIf="!currentUser">
+      <li class="nav-item">
+        <a href="/register" class="nav-link"><span class="glyphicon glyphicon-user"></span>Inscription</a>
+      </li>
+      <li class="nav-item">
+        <a href="/login" class="nav-link"><span class="glyphicon glyphicon-log-in"></span>Connexion</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right" *ngIf="currentUser">
+      <li class="nav-item">
+        <a href="/profile" class="nav-link" class="text-white"><span class="glyphicon glyphicon-user"></span> {{currentUser.nom}}</a>
+      </li>
+      <li class="nav-item">
+        <a (click)="logOut()" class="nav-link text-white" ><span class="glyphicon glyphicon-log-out"></span>Déconnexion</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<nav class="navbar custom-vertical-nav navbar-dark   nav-pills nav-fill" style="background-color: #0b0514;">
+  <ul class="navbar-nav custom-navbar-nav">
+    <li class="nav-item">
+      <a class="navbar-brand" href="/profile">
+        <span><img src="assets/imgs/logo.png"></span>
+        <span class="logo">CHECKART</span>
+      </a>
+    </li>
+    <li class="nav-item" [class.active]="router.url==='/utilisateurs'">
+      <a href="/utilisateurs" class="nav-link">
+        <span class="glyphicon glyphicon-user"></span>
+        <span>Utilisateurs</span>
+      </a>
+    </li>
+    <li class="nav-item" [class.active]="router.url==='/origines'">
+      <a href="/origines" class="nav-link">
+        <span class="glyphicon glyphicon-th-large"></span>
+        <span>Origines</span>
+      </a>
+    </li>
+    <li class="nav-item" [class.active]="router.url==='/tapis'">
+      <a href="/tapis" class="nav-link">
+        <span class="glyphicon glyphicon-shopping-cart"></span>
+        <span>Tapis</span>
+      </a>
+    </li>
+
+    <li class="nav-item" [class.active]="router.url==='/addtapis'">
+      <a href="/addtapis" class="nav-link">
+        <span class="glyphicon glyphicon-shopping-cart"></span>
+        <span>ADD Tapis</span>
+      </a>
+    </li>
+    <li class="nav-item" [class.active]="router.url==='/motifs'">
+      <a href="/motifs" class="nav-link">
+        <span class="glyphicon glyphicon-usd"></span>
+        <span>Motifs</span>
+      </a>
+    </li>
+      <li class="nav-item" [class.active]="router.url==='/images'">
+      <a href="/images" class="nav-link">
+        <span class="glyphicon glyphicon-stats"></span>
+
+        <span>Images</span>
+      </a>
+    </li>
+      <li class="nav-item" [class.active]="router.url==='/caracteristiques'">
+      <a href="/caracteristiques" class="nav-link">
+        <span class="glyphicon glyphicon-briefcase"></span>
+        <span>caracteristiques</span>
+      </a>
+    </li>
+      <li class="nav-item" [class.active]="router.url==='/favoris'">
+      <a href="/favoris" class="nav-link">
+        <span class="glyphicon glyphicon-eye-open"></span>
+        <span>Favoris</span>
+      </a>
+    </li>
+
+  </ul>
+</nav>

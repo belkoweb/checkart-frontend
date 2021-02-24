@@ -1,0 +1,59 @@
+<div class="container" >
+  <form #form="ngForm" autocomplete="off" (ngSubmit)="form.form.valid && createTapis()">
+
+    <div class="row">
+      <div class="form-group col-md-12" [ngClass]="{ 'has-error': form.submitted && !nom.valid }">
+        <label for="nom">Nom</label>
+        <input type="text" class="form-control input-text-custom" id="nom" name="nom" [(ngModel)]="tapis.nom" #nom="ngModel" required />
+        <div *ngIf="form.submitted && !nom.valid" class="help-block">Entrez un nom valide.</div>
+      </div>
+
+      <div class="form-group col-md-12" [ngClass]="{ 'has-error': form.submitted && !nom.valid }">
+        <label for="couleur">Couleur</label>
+        <input type="text" class="form-control input-text-custom" id="couleur" name="couleur" [(ngModel)]="tapis.couleur" #couleur="ngModel" required />
+        <div *ngIf="form.submitted && !couleur.valid" class="help-block">Entrez une couleur valide.</div>
+      </div>
+
+      <div class="form-group col-md-12" [ngClass]="{ 'has-error': form.submitted && !taille.valid }">
+        <label for="taille">Taille</label>
+        <input type="text" class="form-control input-text-custom" id="taille" name="taille" [(ngModel)]="tapis.taille" #taille="ngModel" required />
+        <div *ngIf="form.submitted && !taille.valid" class="help-block">Entrez une taille valide.</div>
+      </div>
+
+      <div class=" form-group col-md-12" [ngClass]="{ 'has-error': form.submitted && !taille.valid }">
+        <label for="desc">Description</label>
+        <textarea  class="form-control" id="desc" name="desc" [(ngModel)]="tapis.desc" #desc="ngModel" required  >
+
+        </textarea>
+      </div>
+      <div class="form-group col-md-12">
+        <label for="image">Image</label>
+        <input type="file" class="form-control-file" id="image" name="image"  [(ngModel)]="tapis.image" #image="ngModel" required>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Origine:</label>
+          <select  [(ngModel)]="selectedOrigines" class="form-control multiselect-select-all" multiple="multiple" [ngModelOptions]="{standalone: true}" data-fouc>
+            <option *ngFor="let item of origineList" [value]="item">{{item.region}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Origine:</label>
+          <select  [(ngModel)]="selectedMotifs" class="form-control multiselect-select-all" multiple="multiple" [ngModelOptions]="{standalone: true}" data-fouc>
+            <option *ngFor="let item of motifList" [value]="item">{{item.symbole}}</option>
+          </select>
+        </div>
+      </div>
+    <div class="form-group">
+      <button type="submit" class="btn text-white" style="background-color: #0b0514">
+        <i class="fa fa-database"></i> Sauvegarder
+      </button>
+      <a class="btn btn-outline-dark ml-1" routerLink="/orders"><i class="fa fa-table"></i> Liste des tapis</a>
+    </div>
+
+    </div>
+  </form>
+</div>

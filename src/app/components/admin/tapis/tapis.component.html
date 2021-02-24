@@ -1,0 +1,72 @@
+<div class="container custom-container">
+  <div class="alert alert-danger" *ngIf="errorMessage">
+    <strong>Error!</strong> {{errorMessage}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="alert alert-success" *ngIf="infoMessage">
+    <strong>Succès!</strong> {{infoMessage}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div *ngIf="dataSource">
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col col-xs-6">
+            <h3 class="panel-title">Tapis</h3>
+          </div>
+          <div class="col col-xs-6 text-right">
+
+            <button type="button" class="btn btn-primary" (click)="createNewTapisRequest()">  <a style ="color:whitesmoke;" href="/addtapis" >
+              Ajouter Un Tapis
+            </a></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <mat-form-field>
+          <mat-label>Chercher</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. lait">
+        </mat-form-field>
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="numero">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Numero</th>
+            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="nom">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Nom</th>
+            <td mat-cell *matCellDef="let element">{{element.nom}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="couleur">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Couleur</th>
+            <td mat-cell *matCellDef="let element">{{element.couleur}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="taille">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Taille</th>
+            <td mat-cell *matCellDef="let element">{{element.taille}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions</th>
+            <td mat-cell *matCellDef="let element" style="width:140px;">
+              <a class="btn btn-warning custom-btn-link" (click)="editTapisRequest(element)"><em class="glyphicon glyphicon-pencil"></em></a>
+              <a class="btn btn-danger custom-btn-link" (click)="deleteTapisRequest(element)"><em class="glyphicon glyphicon-trash"></em></a>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>
