@@ -1,7 +1,6 @@
 <div class="container" >
     <div class="card card-container">
-  <form #form="ngForm" autocomplete="off" (ngSubmit)="form.form.valid && createTapis()">
-
+      <form #form="ngForm" autocomplete="off" (ngSubmit)="form.form.valid && createTapis()">
     <div class="alert alert-danger" role="alert" *ngIf="errorMessage">{{errorMessage}}</div>
     <div class="row">
       <div class="form-group col-md-12" [ngClass]="{ 'has-error': form.submitted && !nom.valid }">
@@ -22,7 +21,7 @@
         <div *ngIf="form.submitted && !taille.valid" class="help-block">Entrez une taille valide.</div>
       </div>
 
-      <div class=" form-group col-md-12" [ngClass]="{ 'has-error': form.submitted && !taille.valid }">
+      <div class=" form-group col-md-12" [ngClass]="{ 'has-error': form.submitted && !desc.valid }">
         <label for="desc">Description</label>
         <textarea  class="form-control" id="desc" name="desc" [(ngModel)]="tapis.desc" #desc="ngModel" required  >
 
@@ -39,7 +38,7 @@
 
       <div class="col-md-6">
         <div class="form-group">
-          <label>Origine:</label>
+          <label>Origines:</label>
           <select  [(ngModel)]="selectedOrigines" class="form-control multiselect-select-all" multiple="multiple" [ngModelOptions]="{standalone: true}" required data-fouc>
             <option *ngFor="let item of origineList" [value]="item">{{item.region}}</option>
           </select>
@@ -47,7 +46,7 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label>Origine:</label>
+          <label>Motifs:</label>
           <select  [(ngModel)]="selectedMotifs" class="form-control multiselect-select-all" multiple="multiple" [ngModelOptions]="{standalone: true}" required data-fouc>
             <option *ngFor="let item of motifList" [value]="item">{{item.symbole}}</option>
           </select>

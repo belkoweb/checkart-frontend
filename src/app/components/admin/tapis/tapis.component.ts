@@ -3,6 +3,10 @@ import {AdminService} from '../../../services/admin.service';
 
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Tapis} from '../../../models/tapis';
+import {Origine} from '../../../models/origine';
+import {Motif} from '../../../models/motif';
+import {tap} from 'rxjs/operators';
+import {HttpEventType, HttpResponse} from '@angular/common/http';
 declare var $: any;
 
 @Component({
@@ -17,7 +21,17 @@ export class TapisComponent implements OnInit {
   selectedTapis: Tapis = new Tapis();
   errorMessage: string;
   infoMessage: string;
+  origineList: Origine[];
+  motifList: Motif[];
+  selectedOrigines = [];
+  selectedMotifs = [];
+  selectedFile;
 
+  tapis: Tapis = new Tapis();
+  isValid: boolean = true;
+  selectedFiles: FileList;
+  currentFileUpload: File;
+  loaded = 0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -25,8 +39,11 @@ export class TapisComponent implements OnInit {
 
   ngOnInit() {
     this.findAllTapis();
+    this.adminService.findAllOrigines().subscribe(res => (this.origineList = res as Origine[]));
+    this.adminService.findAllMotifs().subscribe(res => (this.motifList = res as Motif[]));
   }
 
+  // tslint:disable-next-line:use-life-cycle-interface
   ngAfterViewInit(){
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
@@ -77,7 +94,27 @@ export class TapisComponent implements OnInit {
   }
 
   editTapis(){
-    this.adminService.updateTapis(this.selectedTapis).subscribe(data => {
+
+    this.selectedOrigines.forEach(val=>{
+      let  tapisOrigine ={
+        tapis: this.tapis,
+        origine: val
+      }
+      this.adminService.tapisOrigines.push(tapisOrigine)
+
+    })
+
+    this.selectedMotifs.forEach(val=>{
+
+      let  tapisMotif ={
+        tapis: this.tapis,
+        motif: val
+      }
+      this.adminService.tapisMotifs.push(tapisMotif);
+
+    })
+    this.upload();
+    this.adminService.createTapis(this.selectedTapis).subscribe(data => {
       let itemIndex = this.tapisList.findIndex(item => item.id == this.selectedTapis.id);
       this.tapisList[itemIndex] = this.selectedTapis;
       this.dataSource = new MatTableDataSource(this.tapisList);
@@ -111,4 +148,22 @@ export class TapisComponent implements OnInit {
     });
   }
 
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
+  // Uploads the file to backend server.
+  upload() {
+    this.currentFileUpload = this.selectedFiles.item(0);
+    this.adminService.uploadSingleFile(this.currentFileUpload)
+      .pipe(tap(event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.loaded = Math.round(100 * event.loaded / event.total);
+        }
+      })).subscribe(event => {
+      if (event instanceof HttpResponse) {
+        console.log('hello');
+      }
+    });
+  }
 }
