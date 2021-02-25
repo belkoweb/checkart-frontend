@@ -1,6 +1,8 @@
 <div class="container" >
+    <div class="card card-container">
   <form #form="ngForm" autocomplete="off" (ngSubmit)="form.form.valid && createTapis()">
 
+    <div class="alert alert-danger" role="alert" *ngIf="errorMessage">{{errorMessage}}</div>
     <div class="row">
       <div class="form-group col-md-12" [ngClass]="{ 'has-error': form.submitted && !nom.valid }">
         <label for="nom">Nom</label>
@@ -16,7 +18,7 @@
 
       <div class="form-group col-md-12" [ngClass]="{ 'has-error': form.submitted && !taille.valid }">
         <label for="taille">Taille</label>
-        <input type="text" class="form-control input-text-custom" id="taille" name="taille" [(ngModel)]="tapis.taille" #taille="ngModel" required />
+        <input type="number" class="form-control input-text-custom" id="taille" name="taille" [(ngModel)]="tapis.taille" #taille="ngModel" required />
         <div *ngIf="form.submitted && !taille.valid" class="help-block">Entrez une taille valide.</div>
       </div>
 
@@ -25,16 +27,20 @@
         <textarea  class="form-control" id="desc" name="desc" [(ngModel)]="tapis.desc" #desc="ngModel" required  >
 
         </textarea>
+        <div *ngIf="form.submitted && !desc.valid" class="help-block">Entrez une  description.</div>
       </div>
       <div class="form-group col-md-12">
         <label for="image">Image</label>
-        <input type="file" class="form-control-file" id="image" name="image"  [(ngModel)]="tapis.image" #image="ngModel" required>
+        Progress: {{loaded}}%
+        <mat-progress-bar mode="determinate" class="mb-2" value="{{loaded}}"></mat-progress-bar>
+        <input type="file" class="form-control-file" id="image" name="image"   (change)="selectFile($event)" [(ngModel)]="tapis.image" #image="ngModel" required>
+        <div *ngIf="form.submitted && !image.valid" class="help-block">Choisissez un fichier.</div>
       </div>
 
       <div class="col-md-6">
         <div class="form-group">
           <label>Origine:</label>
-          <select  [(ngModel)]="selectedOrigines" class="form-control multiselect-select-all" multiple="multiple" [ngModelOptions]="{standalone: true}" data-fouc>
+          <select  [(ngModel)]="selectedOrigines" class="form-control multiselect-select-all" multiple="multiple" [ngModelOptions]="{standalone: true}" required data-fouc>
             <option *ngFor="let item of origineList" [value]="item">{{item.region}}</option>
           </select>
         </div>
@@ -42,7 +48,7 @@
       <div class="col-md-6">
         <div class="form-group">
           <label>Origine:</label>
-          <select  [(ngModel)]="selectedMotifs" class="form-control multiselect-select-all" multiple="multiple" [ngModelOptions]="{standalone: true}" data-fouc>
+          <select  [(ngModel)]="selectedMotifs" class="form-control multiselect-select-all" multiple="multiple" [ngModelOptions]="{standalone: true}" required data-fouc>
             <option *ngFor="let item of motifList" [value]="item">{{item.symbole}}</option>
           </select>
         </div>
@@ -56,4 +62,5 @@
 
     </div>
   </form>
+</div>
 </div>

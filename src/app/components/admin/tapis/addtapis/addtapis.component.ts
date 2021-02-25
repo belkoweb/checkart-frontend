@@ -10,6 +10,8 @@ import {Origine} from '../../../../models/origine';
 import {Tapis} from '../../../../models/tapis';
 import {TapisOrigine} from '../../../../models/tapis-origine';
 import {TapisMotif} from '../../../../models/tapis-motif';
+import {tap} from 'rxjs/operators';
+import {HttpEventType, HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'addtapis',
@@ -22,9 +24,13 @@ export class AddtapisComponent implements OnInit {
   selectedOrigines = [];
   selectedMotifs = [];
  selectedFile;
+  errorMessage:string;
+
   tapis: Tapis = new Tapis();
   isValid: boolean = true;
-
+  selectedFiles: FileList;
+  currentFileUpload: File;
+  loaded = 0;
   constructor(
     private service: AdminService,
     private dialog: MatDialog,
@@ -39,29 +45,12 @@ export class AddtapisComponent implements OnInit {
     this.service.findAllMotifs().subscribe(res => (this.motifList = res as Motif[]));
   }
 
-  resetForm(form?: NgForm) {
-    if ((form = null)) form.resetForm();
-
-
-  }
-
-
-  handleImages(Event){
-    this.selectedFile = Event.target.files[0];
-    let formData = new FormData();
-    formData.append("file", this.selectedFile);
-    console.log(this.selectedFile);
-    //this.http.post('http://localhost:8080/upload',formData)
-  }
-
   validateForm() {
     this.isValid = true;
    /*if (this.service.formData.client.id == 0) this.isValid = false;
   //  else if (this.service.orderItems.length == 0) this.isValid = false;*/
     return this.isValid;
   }
-
-
 
   createTapis(){
     if (this.validateForm()){
@@ -84,10 +73,12 @@ export class AddtapisComponent implements OnInit {
         this.service.tapisMotifs.push(tapisMotif);
 
       })
-
+      this.upload();
      console.log(this.tapis);
     this.service.createTapis(this.tapis).subscribe(data=>{
                console.log(data);
+      this.router.navigate(['/tapis']);
+
     }, error => {
       console.log(error);
     });
@@ -99,5 +90,21 @@ export class AddtapisComponent implements OnInit {
   }
 
 
-
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
+  // Uploads the file to backend server.
+  upload() {
+    this.currentFileUpload = this.selectedFiles.item(0);
+    this.service.uploadSingleFile(this.currentFileUpload)
+      .pipe(tap(event => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.loaded = Math.round(100 * event.loaded / event.total);
+        }
+      })).subscribe(event => {
+      if (event instanceof HttpResponse) {
+        console.log('hello');
+      }
+    });
+  }
 }

@@ -9,6 +9,6 @@ export class Tapis {
   desc:string;
   tapis_motifs:TapisMotif[];
   tapis_origines:TapisOrigine[];
-  taille: string;
-  image:string;
+  taille: number;
+  image: File;
 }
