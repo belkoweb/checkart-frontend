@@ -5,7 +5,7 @@ import {map} from 'rxjs/operators';
 import {User} from '../models/user';
 
 
-let API_URL = "http://localhost:7600/checkart/api/user";
+let API_URL = "https://checkart-backend.herokuapp.com/checkart/api/user";
 
 @Injectable({
   providedIn: 'root'
