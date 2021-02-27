@@ -55,24 +55,6 @@ export class AddtapisComponent implements OnInit {
   createTapis(){
     if (this.validateForm()){
 
-          this.selectedOrigines.forEach(val=>{
-            let  tapisOrigine ={
-                 tapis: this.tapis,
-                 origine: val
-            }
-            this.service.tapisOrigines.push(tapisOrigine)
-
-})
-
-      this.selectedMotifs.forEach(val=>{
-
-        let  tapisMotif ={
-          tapis: this.tapis,
-          motif: val
-        }
-        this.service.tapisMotifs.push(tapisMotif);
-
-      })
       this.upload();
      console.log(this.tapis);
     this.service.createTapis(this.tapis).subscribe(data=>{

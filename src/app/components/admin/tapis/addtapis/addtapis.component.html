@@ -17,7 +17,7 @@
 
       <div class="form-group col-md-12" [ngClass]="{ 'has-error': form.submitted && !taille.valid }">
         <label for="taille">Taille</label>
-        <input type="number" class="form-control input-text-custom" id="taille" name="taille" [(ngModel)]="tapis.taille" #taille="ngModel" required />
+        <input type="texte" class="form-control input-text-custom" id="taille" name="taille" [(ngModel)]="tapis.taille" #taille="ngModel" required />
         <div *ngIf="form.submitted && !taille.valid" class="help-block">Entrez une taille valide.</div>
       </div>
 
@@ -36,21 +36,19 @@
         <div *ngIf="form.submitted && !image.valid" class="help-block">Choisissez un fichier.</div>
       </div>
 
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Origines:</label>
-          <select  [(ngModel)]="selectedOrigines" class="form-control multiselect-select-all" multiple="multiple" [ngModelOptions]="{standalone: true}" required data-fouc>
-            <option *ngFor="let item of origineList" [value]="item">{{item.region}}</option>
-          </select>
-        </div>
+
+      <div class="form-group col-md-12" [ngClass]="{ 'has-error': form.submitted && !origine.valid }">
+        <label for="origine">Origine</label>
+        <input type="texte" class="form-control input-text-custom" id="origine" name="origine" [(ngModel)]="tapis.origine" #origine="ngModel" required />
+        <div *ngIf="form.submitted && !origine.valid" class="help-block">Entrez une origine valide.</div>
       </div>
-      <div class="col-md-6">
-        <div class="form-group">
-          <label>Motifs:</label>
-          <select  [(ngModel)]="selectedMotifs" class="form-control multiselect-select-all" multiple="multiple" [ngModelOptions]="{standalone: true}" required data-fouc>
-            <option *ngFor="let item of motifList" [value]="item">{{item.symbole}}</option>
-          </select>
-        </div>
+
+
+
+      <div class="form-group col-md-12" [ngClass]="{ 'has-error': form.submitted && !motif.valid }">
+        <label for="motif">Motifs</label>
+        <input type="texte" class="form-control input-text-custom" id="motif" name="motif" [(ngModel)]="tapis.motif" #motif="ngModel" required />
+        <div *ngIf="form.submitted && !motif.valid" class="help-block">Entrez un motif valide.</div>
       </div>
     <div class="form-group">
       <button type="submit" class="btn text-white" style="background-color: #0b0514">

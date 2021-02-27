@@ -11,7 +11,7 @@ import {Tapis} from '../models/tapis';
 import {TapisMotif} from '../models/tapis-motif';
 import {TapisOrigine} from '../models/tapis-origine';
 
-const API_URL = 'https://checkart-backend.herokuapp.com/checkart/api/admin';
+const API_URL = 'https://checkart-backend/checkart/api/admin';
 @Injectable({
   providedIn: 'root'
 })
@@ -103,34 +103,32 @@ export class AdminService {
   }
 
   createTapis(tapis): Observable<any> {
-    this.formData.tapis_motifs = this.tapisMotifs;
-    this.formData.tapis_origines = this.tapisOrigines;
     const body = {
       nom: tapis.nom,
       description: tapis.desc   ,
       taille: tapis.taille  ,
       couleur:   tapis.couleur,
-      tapis_origines:  this.formData.tapis_origines ,
-      tapis_motifs:  this.formData.tapis_motifs  ,
+      origine:   tapis.origine,
+      motif: tapis.motif
     };
-    return this.http.post(API_URL + '/tapis-create', body,
+    return this.http.post(API_URL + '/tapiss-create', body,
       {headers: this.headers});
   }
 
   updateTapis(tapis: Tapis): Observable<any> {
-    return this.http.put(API_URL + '/tapis-update', JSON.stringify(tapis),
+    return this.http.put(API_URL + '/tapiss-update', JSON.stringify(tapis),
       {headers: this.headers});
   }
 
   deleteTapis(tapis: Tapis): Observable<any> {
-    return this.http.post(API_URL + '/tapis-delete', JSON.stringify(tapis),
+    return this.http.post(API_URL + '/tapiss-delete', JSON.stringify(tapis),
       {headers: this.headers});
   }
 
 
 
   findAllTapis(): Observable<any> {
-    return this.http.get(API_URL + '/tapis-all',
+    return this.http.get(API_URL + '/tapiss-all',
       {headers: this.headers});
   }
 

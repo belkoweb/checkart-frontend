@@ -7,8 +7,8 @@ export class Tapis {
   nom: string;
   couleur:string;
   desc:string;
-  tapis_motifs:TapisMotif[];
-  tapis_origines:TapisOrigine[];
-  taille: number;
+   motif:string;
+   origine:string;
+     taille: string;
   image: File;
 }
