@@ -11,7 +11,7 @@ import {Tapis} from '../models/tapis';
 import {TapisMotif} from '../models/tapis-motif';
 import {TapisOrigine} from '../models/tapis-origine';
 
-const API_URL = 'https://checkart-backend/checkart/api/admin';
+const API_URL = 'https://checkart-backend.herokuapp.com/checkart/api/admin';
 @Injectable({
   providedIn: 'root'
 })
